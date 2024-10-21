@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import UserAvatar from '../component/UserAvatar';
 
 export default function ViewUser() {
     const [user, setUser] = useState({
@@ -8,7 +9,8 @@ export default function ViewUser() {
         username: "",
         email: "",
         dob: "",
-        address: ""
+        address: "",
+        avatar: ""
     });
     const { id } = useParams();
 
@@ -28,6 +30,11 @@ export default function ViewUser() {
                 <div className="mb-4">
                     <h3 className="text-lg font-medium">Detail of user id: {user.userID}</h3>
                     <ul className="mt-2">
+                        <li className="py-2 border-b">
+                            <b>Avatar:</b>
+                            <br />
+                            <img src={`http://localhost:8080/images/UserAvatar/${user.avatar}`} alt="User Avatar" />
+                        </li>
                         <li className="py-2 border-b">
                             <b>Name:</b> {user.name}
                         </li>
@@ -49,6 +56,6 @@ export default function ViewUser() {
                     Back
                 </Link>
             </div>
-        </div>
+        </div >
     );
 }

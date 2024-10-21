@@ -6,13 +6,13 @@ export default function TestUpload() {
             <h3 className="mb-4 text-2xl font-bold text-gray-700">Upload an Image</h3>
             <form
                 method="POST"
-                action="http://localhost:8080/upload/image"
+                action="http://localhost:8080/upload/user-avatar"
                 encType="multipart/form-data"
                 className="flex flex-col items-center bg-white shadow-md rounded px-8 py-6"
             >
                 <input
                     type="file"
-                    name="testUpload"
+                    name="uploadAvatar"
                     accept="image/*"
                     className="mb-4 p-2 border border-gray-300 rounded"
                 />
