@@ -1,0 +1,1 @@
+export const ICON_URL = "https://res.cloudinary.com/deg6p9a9o/image/upload/v1731488966/udilwe35gutryourmddt.jpg"
