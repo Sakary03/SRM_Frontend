@@ -39,8 +39,9 @@ export default function ViewManga() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            // setListChapter(response.data.data);
-            setListChapter(chapters);
+            console.log(">> Response: ", response.data);
+            setListChapter(response.data.data);
+            chapters.sort((a, b) => a.chapterIndex - b.chapterIndex);
             console.log(">> Chapters:  ", listChapter);
         } catch (err) {
             setError("Failed to fetch Chapter data.");

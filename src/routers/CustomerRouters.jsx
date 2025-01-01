@@ -8,6 +8,8 @@ import { useContext } from "react";
 import OAuth2RedirectHandler from "../customer/oauth2/OAuth2RedirectHandler";
 import ViewManga from "../customer/pages/manga-detail/ViewManga";
 import ReadChapter from "../customer/pages/read-manga/ReadChapter";
+import UserProfile from "../customer/pages/user-dashboard/UserProfile";
+import ChangePassword from "../customer/pages/user-dashboard/ChangePassword";
 
 
 function AuthenticatedRoute({ children }) {
@@ -38,7 +40,8 @@ function CustomerRouters() {
             <Route path="/view-manga/:bookID" element={<ViewManga />} />
             <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
             <Route path="/read-manga/chapter/:bookID/:chapterID" element={<ReadChapter />} />
-            
+            <Route path="/user-profile/:userid" element={<UserProfile />} />
+            <Route path="/change-password/:userid" element={<ChangePassword />} />
           </Routes>
           {/* </BrowserRouter> */}
         </ProtectedRoute>

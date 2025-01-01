@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import api from '../../../api/AxiosConfig';
 import chapters from '../manga-detail/chapterDataSample';
 import Footer from '../../footer/Footer';
+import { responsiveFontSizes } from '@mui/material';
 
 export default function ReadChapter() {
     const [manga, setManga] = useState({});
@@ -12,7 +13,7 @@ export default function ReadChapter() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const bookID = useParams().bookID;
-
+    const chapterID = useParams().chapterID;
     // Get manga data
     const fetchManga = async () => {
         try {
@@ -32,11 +33,18 @@ export default function ReadChapter() {
         }
     };
 
-    // Fake get chapter data
     const fetchChapter = async () => {
         try {
-            const chapterData = await chapters[0]; // Assuming 'chapters' contains the data with 'pages'
-            setChapter(chapterData);
+            const newFormData = new FormData();
+            newFormData.append("chapterid", chapterID);
+            const response = await api.get(`/api/chapter/get-chapter/${chapterID}`, newFormData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log("Response: ", response.data);
+            setChapter(response.data.data);
+            chapters.sort((a, b) => a.chapterIndex - b.chapterIndex);
             console.log("Chapter Info: ", chapter);
         } catch (err) {
             setError("Failed to fetch chapter data.");

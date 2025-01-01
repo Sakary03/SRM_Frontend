@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
+import api from "../../api/AxiosConfig";
+import Navbar from '../component/Navbar';
 const DraggableImage = ({ url, index, moveImage }) => {
     const [, ref] = useDrag({
         type: 'image',
@@ -27,12 +27,15 @@ const DraggableImage = ({ url, index, moveImage }) => {
                 alt={`Page preview ${index + 1}`}
                 className="w-48 h-64 object-cover rounded-md border border-gray-300"
             />
+            <div className="text-sm text-gray-500">Page {index + 1}</div>
         </div>
     );
 };
 
 const AddChapterForm = () => {
-    const { bookId } = useParams();
+    const navigate = useNavigate();
+
+    const { bookID } = useParams();
     const [pages, setPages] = useState([]);
     const [previewUrls, setPreviewUrls] = useState([]);
     const [chapterIndex, setChapterIndex] = useState('');
@@ -66,15 +69,21 @@ const AddChapterForm = () => {
             formData.append('pages', pages[i]);
         }
         formData.append('chapterIndex', chapterIndex);
-
+        formData.append('chapterIndex', chapterIndex);
+        formData.append('bookid', bookID);
+        console.log(formData);
         try {
-            const response = await axios.post(`/addchapter/${bookId}`, formData, {
+            const token = localStorage.getItem('token');
+            const response = await api.post(`api/chapter/addchapter/${bookID}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`
+
                 },
             });
 
             setMessage('Chapter added successfully!');
+            navigate(`admin/manga/${bookID}`);
         } catch (error) {
             setMessage('Error adding chapter. Please try again.');
             console.error(error);
@@ -83,6 +92,7 @@ const AddChapterForm = () => {
 
     return (
         <DndProvider backend={HTML5Backend}>
+            <Navbar />
             <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-6 text-gray-700">Add New Chapter</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
@@ -25,7 +25,12 @@ export default function Navbar() {
             navigate(`/search?q=${searchQuery}`);
         }
     };
+    useEffect(() => {
+        console.log(">> User Info: ", user);
+        return () => {
 
+        };
+    }, []);
     return (
         <nav className="bg-gray-800">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -178,24 +183,24 @@ export default function Navbar() {
                                         aria-labelledby="user-menu-button"
                                         tabIndex="-1"
                                     >
-                                        <div
-                                            href="#"
+                                        <Link
+                                            to={`/user-profile/${user.userid}`}
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
                                             tabIndex="-1"
                                             id="user-menu-item-0"
                                         >
-                                            Your Profile
-                                        </div>
-                                        <div
-                                            href="#"
+                                            Thông tin của tôi
+                                        </Link>
+                                        <Link
+                                            to={`/change-password/${user.userid}`}
                                             className="block px-4 py-2 text-sm text-gray-700"
                                             role="menuitem"
                                             tabIndex="-1"
                                             id="user-menu-item-1"
                                         >
-                                            Settings
-                                        </div>
+                                            Đổi mật khẩu
+                                        </Link>
                                         <div
                                             href="#"
                                             className="block px-4 py-2 text-sm text-gray-700"
@@ -204,7 +209,7 @@ export default function Navbar() {
                                             id="user-menu-item-2"
                                             onClick={() => handleLogoutClick()}
                                         >
-                                            Sign out
+                                            Đăng xuất
                                         </div>
                                     </div>
                                 )}
